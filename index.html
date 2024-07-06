@@ -60,15 +60,14 @@
             <p id="currentSetInfo"></p>
         </div>
         <div class="box box-large">
-            <h2>その模擬内のデータの修正</h2>
-            <p>ここでは、模擬内のデータを修正できます。例えば：</p>
-            <ul>
-                <li>プレイヤー名の修正</li>
-                <li>点数の修正</li>
-                <li>コース名の修正</li>
-                <li>チーム編成の変更</li>
-            </ul>
-            <p>修正機能は現在実装中です。完成次第、ここに編集フォームが追加されます。</p>
+            <h2>データの修正</h2>
+            <form id="updateForm">
+                <label for="playerId">プレイヤーID:</label>
+                <input type="number" id="playerId" required>
+                <label for="newScore">新しいスコア:</label>
+                <input type="number" id="newScore" required>
+                <button type="submit">更新</button>
+            </form>
         </div>
     </div>
 
