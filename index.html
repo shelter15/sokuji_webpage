@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マリオカート情報</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .box {
+            background-color: #4a86e8;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            flex: 1;
+            min-width: 200px;
+        }
+        .box-large {
+            flex: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box box-large">
+            <h2>タグ、点数、点差</h2>
+            <p>ここにタグ、点数、点差の情報が表示されます。</p>
+        </div>
+        <div class="box">
+            <h2>セットごとのコースと自分の順位</h2>
+            <p>ここにセットごとのコースと自分の順位が表示されます。</p>
+        </div>
+        <div class="box box-large">
+            <h2>その模擬内のデータの修正</h2>
+            <p>ここにその模擬内のデータの修正情報が表示されます。</p>
+        </div>
+    </div>
+</body>
+</html>
