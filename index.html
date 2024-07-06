@@ -40,58 +40,24 @@
             background-color: #3a76d8;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="box box-large">
             <h2>タグ、点数、点差</h2>
-            <table>
+            <table id="teamTable">
                 <tr>
                     <th>チーム</th>
                     <th>点数</th>
                     <th>点差</th>
                 </tr>
-                <tr>
-                    <td>チームA</td>
-                    <td>100</td>
-                    <td>+20</td>
-                </tr>
-                <tr>
-                    <td>チームB</td>
-                    <td>80</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>チームC</td>
-                    <td>60</td>
-                    <td>-20</td>
-                </tr>
+                <!-- データはJavaScriptで動的に追加されます -->
             </table>
         </div>
         <div class="box">
             <h2>セットごとのコースと自分の順位</h2>
-            <table>
-                <tr>
-                    <th>セット</th>
-                    <th>コース</th>
-                    <th>順位</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>キノコキャニオン</td>
-                    <td>3位</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>レインボーロード</td>
-                    <td>1位</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>ヨッシーサーキット</td>
-                    <td>2位</td>
-                </tr>
-            </table>
+            <p id="currentSetInfo"></p>
         </div>
         <div class="box box-large">
             <h2>その模擬内のデータの修正</h2>
@@ -105,5 +71,37 @@
             <p>修正機能は現在実装中です。完成次第、ここに編集フォームが追加されます。</p>
         </div>
     </div>
+
+    <script>
+        const socket = io('http://localhost:5000');
+
+        socket.on('update_data', function(jsonData) {
+            const data = JSON.parse(jsonData);
+            updateTeamTable(data.teams);
+            updateSetInfo(data);
+        });
+
+        function updateTeamTable(teams) {
+            const table = document.getElementById('teamTable');
+            // ヘッダー行以外をクリア
+            while (table.rows.length > 1) {
+                table.deleteRow(1);
+            }
+            // チームデータを追加
+            const maxScore = Math.max(...teams.map(team => team.score));
+            teams.forEach(team => {
+                const row = table.insertRow();
+                row.insertCell(0).textContent = team.name;
+                row.insertCell(1).textContent = team.score;
+                const diff = team.score - maxScore;
+                row.insertCell(2).textContent = diff === 0 ? '-' : (diff > 0 ? `+${diff}` : diff);
+            });
+        }
+
+        function updateSetInfo(data) {
+            const infoElement = document.getElementById('currentSetInfo');
+            infoElement.textContent = `セット ${data.set_number}: ${data.track_name} - 順位: ${data.player_rank}位`;
+        }
+    </script>
 </body>
 </html>
