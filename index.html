@@ -4,13 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>マリオカート情報</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .box {
+            background-color: #4a86e8;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            flex: 1;
+            min-width: 200px;
+        }
+        .box-large {
+            flex: 2;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid white;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #3a76d8;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
 </head>
 <body>
     <div class="container">
-        <div id="teamInfo"></div>
-        <div id="currentSetInfo"></div>
+        <div class="box box-large">
+            <h2>タグ、点数、点差</h2>
+            <table id="teamTable">
+                <tr>
+                    <th>チーム</th>
+                    <th>点数</th>
+                    <th>点差</th>
+                </tr>
+                <!-- データはJavaScriptで動的に追加されます -->
+            </table>
+        </div>
+        <div class="box">
+            <h2>セットごとのコースと自分の順位</h2>
+            <p id="currentSetInfo"></p>
+        </div>
+        <div class="box box-large">
+            <h2>その模擬内のデータの修正</h2>
+            <p>ここでは、模擬内のデータを修正できます。例えば：</p>
+            <ul>
+                <li>プレイヤー名の修正</li>
+                <li>点数の修正</li>
+                <li>コース名の修正</li>
+                <li>チーム編成の変更</li>
+            </ul>
+            <p>修正機能は現在実装中です。完成次第、ここに編集フォームが追加されます。</p>
+        </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
