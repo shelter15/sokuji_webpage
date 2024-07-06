@@ -4,104 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>マリオカート情報</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .box {
-            background-color: #4a86e8;
-            color: white;
-            padding: 20px;
-            border-radius: 5px;
-            flex: 1;
-            min-width: 200px;
-        }
-        .box-large {
-            flex: 2;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid white;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #3a76d8;
-        }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <div class="box box-large">
-            <h2>タグ、点数、点差</h2>
-            <table id="teamTable">
-                <tr>
-                    <th>チーム</th>
-                    <th>点数</th>
-                    <th>点差</th>
-                </tr>
-                <!-- データはJavaScriptで動的に追加されます -->
-            </table>
-        </div>
-        <div class="box">
-            <h2>セットごとのコースと自分の順位</h2>
-            <p id="currentSetInfo"></p>
-        </div>
-        <div class="box box-large">
-            <h2>その模擬内のデータの修正</h2>
-            <p>ここでは、模擬内のデータを修正できます。例えば：</p>
-            <ul>
-                <li>プレイヤー名の修正</li>
-                <li>点数の修正</li>
-                <li>コース名の修正</li>
-                <li>チーム編成の変更</li>
-            </ul>
-            <p>修正機能は現在実装中です。完成次第、ここに編集フォームが追加されます。</p>
-        </div>
+        <div id="teamInfo"></div>
+        <div id="currentSetInfo"></div>
     </div>
-
-    <script>
-        const socket = io('http://localhost:5000');
-
-        socket.on('update_data', function(jsonData) {
-            const data = JSON.parse(jsonData);
-            updateTeamTable(data.teams);
-            updateSetInfo(data);
-        });
-
-        function updateTeamTable(teams) {
-            const table = document.getElementById('teamTable');
-            // ヘッダー行以外をクリア
-            while (table.rows.length > 1) {
-                table.deleteRow(1);
-            }
-            // チームデータを追加
-            const maxScore = Math.max(...teams.map(team => team.score));
-            teams.forEach(team => {
-                const row = table.insertRow();
-                row.insertCell(0).textContent = team.name;
-                row.insertCell(1).textContent = team.score;
-                const diff = team.score - maxScore;
-                row.insertCell(2).textContent = diff === 0 ? '-' : (diff > 0 ? `+${diff}` : diff);
-            });
-        }
-
-        function updateSetInfo(data) {
-            const infoElement = document.getElementById('currentSetInfo');
-            infoElement.textContent = `セット ${data.set_number}: ${data.track_name} - 順位: ${data.player_rank}位`;
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
