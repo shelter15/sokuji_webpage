@@ -73,7 +73,7 @@
     </div>
 
     <script>
-        const socket = io('http://localhost:5000');
+        const socket = io();
 
         socket.on('update_data', function(jsonData) {
             const data = JSON.parse(jsonData);
